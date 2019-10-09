@@ -2,23 +2,23 @@
 {
     public class MusicRecord
     {
-        public string tile { get; set; }
-        public string artist { get; set; }
-        public string duration { get; set; }
-        public string yearOfPublication { get; set; }
-        public string numberOfTracks { get; set; }
+        public string Title { get; set; }
+        public string Artist { get; set; }
+        public string Duration { get; set; }
+        public string YearOfPublication { get; set; }
+        public string NumberOfTracks { get; set; }
 
         public MusicRecord()
         {
         }
 
-        public MusicRecord(string tile, string artist, string duration, string yearOfPublication, string numberOfTracks)
+        public MusicRecord(string title, string artist, string duration, string yearOfPublication, string numberOfTracks)
         {
-            this.tile = tile;
-            this.artist = artist;
-            this.duration = duration;
-            this.yearOfPublication = yearOfPublication;
-            this.numberOfTracks = numberOfTracks;
+            this.Title = title;
+            this.Artist = artist;
+            this.Duration = duration;
+            this.YearOfPublication = yearOfPublication;
+            this.NumberOfTracks = numberOfTracks;
         }
 
     }

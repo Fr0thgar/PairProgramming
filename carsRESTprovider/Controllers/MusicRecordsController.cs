@@ -28,17 +28,17 @@ namespace carsRESTprovider.Controllers
         }
 
         // GET: api/MusicRecords/5
-        [HttpGet("{name}", Name = "Get")]
-        public string Get(string name)
+        [HttpGet("{title}", Name = "Get")]
+        public string Get(string title)
         {
-            return Records.find(r => r.Name = name);
+            return Records.Find(r => r.Title = title);
         }
 
         // POST: api/MusicRecords
         [HttpPost]
         public void Post([FromBody] MusicRecord value)
         {
-            Records.add(value);
+            Records.Add(value);
         }
 
         // PUT: api/MusicRecords/5
