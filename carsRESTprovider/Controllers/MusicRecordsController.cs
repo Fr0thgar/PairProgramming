@@ -29,9 +29,9 @@ namespace carsRESTprovider.Controllers
 
         // GET: api/MusicRecords/5
         [HttpGet("{title}", Name = "Get")]
-        public string Get(string title)
+        public MusicRecord Get(string title)
         {
-            return Records.Find(r => r.Title = title);
+            return Records.Find(r => r.Title == title);
         }
 
         // POST: api/MusicRecords
@@ -42,17 +42,22 @@ namespace carsRESTprovider.Controllers
         }
 
         // PUT: api/MusicRecords/5
-        [HttpPut("{name}")]
-        public void Put(string name, [FromBody] MusicRecord value)
+        [HttpPut("{title}")]
+        public void Put(string title, [FromBody] MusicRecord value)
         {
-            Get(name) = value;
+            if (value != null)
+            {
+                MusicRecord temp = new MusicRecord();
+                temp = Get(title);
+                temp = value;
+            }
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{name}")]
-        public void Delete(string name)
+        [HttpDelete("{title}")]
+        public void Delete(string title)
         {
-            Records.remove(name);
+            Records.Remove(Records.Find(r => r.Title == title));
         }
     }
 }
