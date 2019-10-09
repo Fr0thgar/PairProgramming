@@ -15,39 +15,44 @@ namespace carsRESTprovider.Controllers
         public static List<MusicRecord> Records = new List<MusicRecord>()
         {
             new MusicRecord("Enough", "Counterfit", "151", "2017", "10"),
-            new MusicRecord("Leibe ist für Alle da", "Rammstein","200", "2015","16")
+            new MusicRecord("Leibe ist für Alle da", "Rammstein","200", "2015","16"),
+            new MusicRecord("Tangled", "Disney", "20", "2010", "8"),
+            new MusicRecord("Ht me baby", "baseBalls", "20.42", "2016", "10")
         };
 
         // GET: api/MusicRecords
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<MusicRecord> Get()
         {
-            return new string[] { "value1", "value2" };
+            return Records;
         }
 
         // GET: api/MusicRecords/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{name}", Name = "Get")]
+        public string Get(string name)
         {
-            return "value";
+            return Records.find(r => r.Name = name);
         }
 
         // POST: api/MusicRecords
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] MusicRecord value)
         {
+            Records.add(value);
         }
 
         // PUT: api/MusicRecords/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{name}")]
+        public void Put(string name, [FromBody] MusicRecord value)
         {
+            Get(name) = value;
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{name}")]
+        public void Delete(string name)
         {
+            Records.remove(name);
         }
     }
 }
