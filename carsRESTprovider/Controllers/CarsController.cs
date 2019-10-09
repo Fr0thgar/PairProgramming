@@ -9,18 +9,18 @@ namespace carsRESTprovider.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        private static readonly List<Car> Cars = new List<Car>
+        private static readonly List<MusicRecord> Cars = new List<MusicRecord>
         {
-            new Car {Id=1, Model = "Amazon", Vendor = "Volvo", Price = 12345},
-            new Car {Id=2, Model = "A8", Vendor = "Audi", Price = 2222222},
-            new Car {Id=3, Model = "Punto", Vendor = "Fiat", Price = 102022}
+            new MusicRecord {Id=1, Model = "Amazon", Vendor = "Volvo", Price = 12345},
+            new MusicRecord {Id=2, Model = "A8", Vendor = "Audi", Price = 2222222},
+            new MusicRecord {Id=3, Model = "Punto", Vendor = "Fiat", Price = 102022}
         };
 
         private static int _nextId = 4;
 
         // GET: api/Cars
         [HttpGet]
-        public IEnumerable<Car> Get()
+        public IEnumerable<MusicRecord> Get()
         {
             return Cars;
         }
@@ -28,18 +28,18 @@ namespace carsRESTprovider.Controllers
         // GET: api/Cars/5
         [HttpGet]
         [Route("{id}")]
-        public Car Get(int id)
+        public MusicRecord Get(int id)
         {
             return Cars.FirstOrDefault(car => car.Id == id);
         }
 
         // POST: api/Cars
         [HttpPost]
-        public int Post([FromBody] Car car)
+        public int Post([FromBody] MusicRecord musicRecord)
         {
-            car.Id = _nextId++;
-            Cars.Add(car);
-            return car.Id;
+            musicRecord.Id = _nextId++;
+            Cars.Add(musicRecord);
+            return musicRecord.Id;
         }
 
         // PUT: api/Cars/5
