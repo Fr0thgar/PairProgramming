@@ -14,10 +14,10 @@ namespace carsRESTprovider.Controllers
     {
         public static List<MusicRecord> Records = new List<MusicRecord>()
         {
-            new MusicRecord("Enough", "Counterfit", "151", "2017", "10"),
-            new MusicRecord("Leibe ist für Alle da", "Rammstein","200", "2015","16"),
-            new MusicRecord("Tangled", "Disney", "20", "2010", "8"),
-            new MusicRecord("Ht me baby", "baseBalls", "20.42", "2016", "10")
+            new MusicRecord("Enough", "Counterfit", 151, "2017", "10"),
+            new MusicRecord("Leibe ist für Alle da", "Rammstein",200, "2015","16"),
+            new MusicRecord("Tangled", "Disney", 20, "2010", "8"),
+            new MusicRecord("Ht me baby", "baseBalls", 20, "2016", "10")
         };
 
         // GET: api/MusicRecords
@@ -31,7 +31,7 @@ namespace carsRESTprovider.Controllers
         [HttpGet("{title}", Name = "Get")]
         public MusicRecord Get(string title)
         {
-            return Records.Find(r => r.Title == title);
+            return Records.Find(r => r.Title.ToLower().Contains(title.ToLower()));
         }
 
         // POST: api/MusicRecords
@@ -47,9 +47,15 @@ namespace carsRESTprovider.Controllers
         {
             if (value != null)
             {
-                MusicRecord temp = new MusicRecord();
-                temp = Get(title);
-                temp = value;
+                MusicRecord record = Get(title);
+
+                if (record != null)
+                {
+                    record.Artist = value.Artist;
+                    record.YearOfPublication = value.YearOfPublication;
+                    record.Duration = value.Duration;
+                    record.NumberOfTracks = value.NumberOfTracks;
+                }
             }
         }
 
@@ -58,6 +64,53 @@ namespace carsRESTprovider.Controllers
         public void Delete(string title)
         {
             Records.Remove(Records.Find(r => r.Title == title));
+        }
+
+        [HttpGet]
+        [Route("artist/{artist}")]
+        public IEnumerable<MusicRecord> FindArtist(string artist)
+        {
+            List<MusicRecord> list = new List<MusicRecord>();
+            foreach (MusicRecord musicRecord in Records)
+            {
+                if (musicRecord.Artist.ToLower().Contains(artist.ToLower()))
+                {
+                    list.Add(musicRecord);
+                }
+            }
+
+            return list;
+        }
+
+        [HttpGet]
+        [Route("search")]
+        public IEnumerable<MusicRecord> FindDuration([FromQuery] FilterRecord filter)
+        {
+            //List<MusicRecord> list = new List<MusicRecord>();
+
+            //if (filter.High == 0)
+            //{
+            //    filter.High = int.MaxValue;
+            //}
+
+            //list.Add(Records.Find(r => r.Duration > filter.Low && r.Duration < filter.High));
+
+            //return list;
+
+            List<MusicRecord> itemList = new List<MusicRecord>();
+            if (filter.High <= 0)
+            {
+                filter.High = int.MaxValue;
+            }
+            foreach (MusicRecord item in Get())
+            {
+
+                if (item.Duration > filter.Low && item.Duration < filter.High)
+                {
+                    itemList.Add(item);
+                }
+            }
+            return itemList;
         }
     }
 }
